@@ -1,6 +1,17 @@
 from tkinter import *
+from pathlib import Path
 import tkinter as tk
-import cv2
+import cv2, os
+
+
+# I disabled the attack method so now it just takes the picture and stores it in the root folder.
+# We Will use the picture for our other functions, and it is stored as _image.png
+
+def setup():
+    os.chdir(Path(__file__).parent)
+    print(Path(__file__).parent)
+    pass
+
 
 def take_picture():
     cap = cv2.VideoCapture(0)
@@ -13,15 +24,15 @@ def take_picture():
         if not ret:
             print("No more cap")
             break
-        cv2.imwrite()
+        cv2.imwrite(filename="_image.png", img=frame)
         cv2.destroyAllWindows()
         break
 
     cap.release()
 
-    
+# For now we will disable the attack method and this can be used to annoy later on in the program.
 def attack():
-    image1 = PhotoImage(file=r"C:\Users\zacal\OneDrive\Desktop\Compsci\captured_image.png")
+    image1 = PhotoImage(file="_image.png")
     for i in range(5):
         top = Toplevel()
         label = Label(top, image=image1)
@@ -29,11 +40,11 @@ def attack():
     top.mainloop()
 
 def main():
-    root = Tk()
-    #take_picture()
-    button = Button(root, text="Press me to attack", command=attack(), font=(20))
-    button.pack()
-    root.mainloop()
+    #root = Tk()
+    take_picture()
+    #button = Button(root, text="Press me to attack", command=attack(), font=(20))
+    ##button.pack()
+    #root.mainloop()
 
-
+setup()
 main()
