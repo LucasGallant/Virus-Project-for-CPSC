@@ -1,3 +1,4 @@
-import you_exe
+import threading
+import you_exe as you
 
-you_exe.main()
+you.startUp()
