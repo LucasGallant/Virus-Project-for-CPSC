@@ -8,6 +8,16 @@ def initialize():
     print(Path(__file__).parent)
     pass
 
+def startUp():
+    initialize()
+    t1 = threading.Thread(target=display_image_unclosable)
+    t2 = threading.Thread(target=always_on)
+    # Take picture of the user
+    take_picture()
+    t1.start()
+    t2.start()
+
+
 def always_on():
     while True:
         if(keyboard.is_pressed('p')):
@@ -36,19 +46,10 @@ def display_image_unclosable():
     while True:
         root = Tk()
         root.geometry("500x400")
-        photo = PhotoImage(file="_image.png")
+        photo = PhotoImage(file="_image.png", height=500, width=500)
         label = Label(root, image = photo)
         label.pack()
         if keyboard.is_pressed('p'):
             print("Key pressed!")
         root.mainloop()
-
-def startUp():
-    initialize()
-    t1 = threading.Thread(target=display_image_unclosable)
-    t2 = threading.Thread(target=always_on)
-    # Take picture of the user
-    take_picture()
-    t1.start()
-    t2.start()
 
