@@ -3,12 +3,6 @@ from tkinter import *
 from pathlib import Path
 import tkinter as tk
 
-# So i figured out the keybind press failing to end the program, it does work now, but you basically have to hold it while you are closing thje image.
-# This is because the mainloop is the current running process and we can only do one thign at a time. 
-# Edit: I implemented 2 threads, one that runs the always_on function which waits for key press,
-# and one that runs the window where we must likely will put all are future functions in, or run more threads.
-
-
 def setup():
     os.chdir(Path(__file__).parent)
     print(Path(__file__).parent)
@@ -37,14 +31,6 @@ def take_picture():
 
     cap.release()
 
-# For now we will disable the attack method and this can be used to annoy later on in the program.
-def attack():
-    image1 = PhotoImage(file="_image.png")
-    for i in range(5):
-        top = Toplevel()
-        label = Label(top, image=image1)
-        label.pack()
-    top.mainloop()
 
 def display_image_unclosable():
     while True:
@@ -65,6 +51,17 @@ def main():
     setup()
     t1 = threading.Thread(target=display_image_unclosable)
     t2 = threading.Thread(target=always_on)
+<<<<<<< HEAD
+
+    # Take picture of the user
+
+    take_picture()
+
+    t1.start()
+    t2.start()
+    print("hello world")
+
+=======
     t1.start()
     t2.start()
 
@@ -73,6 +70,7 @@ def main():
     #button = Button(root, text="Press me to attack", command=attack(), font=(20))
     ##button.pack()
     #root.mainloop()
+>>>>>>> 79bcd5b79ef9a8cd4b041ec168684929d80c7cd4
 
 main()
 
