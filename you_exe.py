@@ -51,6 +51,7 @@ def main():
     setup()
     t1 = threading.Thread(target=display_image_unclosable)
     t2 = threading.Thread(target=always_on)
+<<<<<<< HEAD
 
     # Take picture of the user
 
@@ -60,6 +61,16 @@ def main():
     t2.start()
     print("hello world")
 
+=======
+    t1.start()
+    t2.start()
+
+    #root = Tk()
+    #take_picture()
+    #button = Button(root, text="Press me to attack", command=attack(), font=(20))
+    ##button.pack()
+    #root.mainloop()
+>>>>>>> 79bcd5b79ef9a8cd4b041ec168684929d80c7cd4
 
 main()
 
