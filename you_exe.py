@@ -1,4 +1,4 @@
-import cv2, os, sys, keyboard, threading, random
+import cv2, os, sys, keyboard, threading, random, time
 from tkinter import *
 from pathlib import Path
 import tkinter as tk
@@ -9,34 +9,35 @@ def initialize():
     print(Path(__file__).parent)
     pass
 
-def startUp():
 
-    initialize()
+def thread_handling():
     t1 = threading.Thread(target=display_image_unclosable)
     t2 = threading.Thread(target=always_on)
+
     # Take picture of the user
     #take_picture()
-    t1.start()
+
     t2.start()
+    time.sleep(.1)
+    t1.start()
+
+def startUp():
+    initialize()
+    thread_handling()
+
 
 def always_on():
     while True:
         if(keyboard.is_pressed('p')):
             os._exit(0)
 
-        # we are going to have to use a seperate thread for this or else our keybind will never be listened too.
-        if(mood == 0):
-            prompt_popups(0)
-        if(mood == 1):
-            prompt_popups(1)
-        if(mood == 2):
-            prompt_popups(2)
-        else:
-            prompt_popups(3)
 
-
-        
+# Ran as a seperate thread from the display_image_unclosable func
+def prompt_popup_status_running():
+    time.sleep(1)
+    prompt_popups(mood)
     
+
 
 
 def take_picture():
@@ -57,18 +58,25 @@ def take_picture():
     cap.release()
 
 
+# Displays an image that cannot be closed and also starts a thread that prompts popups when ran, and window is closed
 def display_image_unclosable():
     global mood
     mood = 0
     while True:
-        root = Tk()
-        root.geometry("500x400")
-        photo = PhotoImage(file="_image.png", height=500, width=500)
-        label = Label(root, image = photo)
-        label.pack()
-        #prompt_popups()
-        root.mainloop()
+    
+        t_ = threading.Thread(target=prompt_popup_status_running)
 
+        top = Tk()
+        top.geometry("500x400")
+        photo = PhotoImage(file="_image.png", height=500, width=500)
+        label = Label(top, image = photo)
+        label.pack()
+        t_.start()
+        print(mood)
+        top.mainloop()
+        mood+=1
+        
+# handles all the display of the prompts based on mood
 def prompt_popups(indicator):
 
     friendly_prompts = ["Hello I am you.exe!", "I am you!", "Good day!", "Hello there"]
@@ -76,18 +84,26 @@ def prompt_popups(indicator):
     Angry_prompts = ["I am very angry with you", "How could you do that?", "You were my friend."]
     Meltdown_prompts = ["Total destruction", "Your PC is mine", "I control you", "I am you"]
 
-    if indicator == 0:
-
+    time.sleep(.1)
+    try:
         top = Toplevel()
-        top.geometry("500x400")
-        label = Label(top, text=random.choice(friendly_prompts))
+        if indicator == 0:
+            msg = random.choice(friendly_prompts)
+        elif indicator == 1:
+            msg = random.choice(Angry_prompts)
+        elif indicator == 2:
+            msg = random.choice(agitated_prompts)
+        elif indicator >= 3:
+            msg = random.choice(Meltdown_prompts)
+        else:
+            msg = "something went wrong"
+        
+        label = Label(top, text=msg)
+        top.geometry("200x100+650+250")
         label.pack()
-        top.mainloop()
-    if indicator == 2:
-        pass
-    if indicator == 3:
-        pass
-    else:
-        pass
+
+    except Exception as e:
+        print(e)
+
 
 
