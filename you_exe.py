@@ -2,6 +2,9 @@ import cv2, os, sys, keyboard, threading, random, time
 from tkinter import *
 from pathlib import Path
 import tkinter as tk
+import desktopChange as dc
+
+mood = 1
 
 
 def initialize():
@@ -72,7 +75,7 @@ def display_image_unclosable():
         label = Label(top, image = photo)
         label.pack()
         t_.start()
-        print(mood)
+        #print(mood)
         top.mainloop()
         mood+=1
         
@@ -82,7 +85,7 @@ def prompt_popups(indicator):
     friendly_prompts = ["Hello I am you.exe!", "I am you!", "Good day!", "Hello there"]
     agitated_prompts = ["Thats not very nice", "I thought we were friends", "Why would you do that?", "I am not happy with you"]
     Angry_prompts = ["I am very angry with you", "How could you do that?", "You were my friend."]
-    Meltdown_prompts = ["Total destruction", "Your PC is mine", "I control you", "I am you"]
+    Meltdown_prompts = ["Total destruction", "Your PC is mine", "I control you", "I am you.exe and I will destroy you!"]
 
     time.sleep(.1)
     try:
@@ -95,6 +98,8 @@ def prompt_popups(indicator):
             msg = random.choice(agitated_prompts)
         elif indicator >= 3:
             msg = random.choice(Meltdown_prompts)
+            
+
         else:
             msg = "something went wrong"
         
@@ -106,4 +111,5 @@ def prompt_popups(indicator):
         print(e)
 
 
-
+def get_mood():
+    return mood
