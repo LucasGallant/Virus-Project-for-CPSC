@@ -18,7 +18,7 @@ def thread_handling():
     t2 = threading.Thread(target=always_on)
 
     # Take picture of the user
-    take_picture()
+    #take_picture()
 
     t2.start()
     time.sleep(.1)
@@ -37,7 +37,7 @@ def always_on():
 
 # Ran as a seperate thread from the display_image_unclosable func
 def prompt_popup_status_running():
-    time.sleep(1)
+    #time.sleep(1)
     prompt_popups(mood)
     
 
@@ -91,7 +91,6 @@ def prompt_popups(indicator):
     Angry_prompts = ["I am very angry with you", "How could you do that?", "You were my friend."]
     Meltdown_prompts = ["Total destruction", "Your PC is mine", "I control you", "I am you.exe and I will destroy you!"]
 
-    time.sleep(.1)
     try:
         top = Toplevel()
         if indicator == 0:
