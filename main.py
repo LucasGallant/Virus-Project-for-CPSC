@@ -1,7 +1,9 @@
 import you_exe as you
 import desktopChange as dc
+import imageAlteration as ia
 import time
 from pathlib import Path
+
 
 
 # On startup
@@ -13,8 +15,12 @@ while True:
     if you.get_mood() >= 3:
         # Use functions defined in desktopChange.py here, with respect to order and timing
         if (Path("_image.png").is_file()):
+            ia.invertColors("_image.png")
+            ia.sharpen("_image.png", 50)
             dc.set_wallpaper("_image.png")
         else:
+            ia.invertColors("default.png")
+            ia.sharpen("default.png", 50)
             dc.set_wallpaper("default.png")
         for i in range(100):
             time.sleep(1)

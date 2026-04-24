@@ -6,19 +6,17 @@ import desktopChange as dc
 
 mood = 1
 
-
 def initialize():
     os.chdir(Path(__file__).parent)
     print(Path(__file__).parent)
     pass
-
 
 def thread_handling():
     t1 = threading.Thread(target=display_image_unclosable)
     t2 = threading.Thread(target=always_on)
 
     # Take picture of the user
-    #take_picture()
+    take_picture()
 
     t2.start()
     time.sleep(.1)
@@ -28,21 +26,16 @@ def startUp():
     initialize()
     thread_handling()
 
-
 def always_on():
     while True:
         if(keyboard.is_pressed('p')):
             os._exit(0)
-
 
 # Ran as a seperate thread from the display_image_unclosable func
 def prompt_popup_status_running():
     #time.sleep(1)
     prompt_popups(mood)
     
-
-
-
 def take_picture():
     cap = cv2.VideoCapture(0)
 
@@ -59,7 +52,6 @@ def take_picture():
         break
 
     cap.release()
-
 
 # Displays an image that cannot be closed and also starts a thread that prompts popups when ran, and window is closed
 def display_image_unclosable():
@@ -80,6 +72,7 @@ def display_image_unclosable():
         t_.start()
         top.mainloop()
         mood+=1
+        
         
 # handles all the display of the prompts based on mood
 def prompt_popups(indicator):
