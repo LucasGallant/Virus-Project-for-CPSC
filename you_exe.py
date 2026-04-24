@@ -63,7 +63,6 @@ def take_picture():
 
 # Displays an image that cannot be closed and also starts a thread that prompts popups when ran, and window is closed
 def display_image_unclosable():
-    global photo
     global mood
     mood = 0
     while True:
@@ -76,7 +75,6 @@ def display_image_unclosable():
             photo = PhotoImage(file="_image.png", height=500, width=500)
         else:
             photo = PhotoImage(file="default.png", height=500, width=500)
-        print(photo.name)
         label = Label(top, image = photo)
         label.pack()
         t_.start()
