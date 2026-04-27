@@ -4,7 +4,7 @@ from pathlib import Path
 import tkinter as tk
 import desktopChange as dc
 
-mood = 1
+#mood = 1
 
 def initialize():
     os.chdir(Path(__file__).parent)
@@ -30,12 +30,6 @@ def always_on():
     while True:
         if(keyboard.is_pressed('p')):
             os._exit(0)
-
-# Ran as a seperate thread from the display_image_unclosable func
-def prompt_popup_status_running():
-    #time.sleep(1)
-    prompt_popups(mood)
-    
 def take_picture():
     cap = cv2.VideoCapture(0)
 
@@ -59,7 +53,7 @@ def display_image_unclosable():
     mood = 0
     while True:
     
-        t_ = threading.Thread(target=prompt_popup_status_running)
+        t_ = threading.Thread(target=prompt_popups)
 
         top = Tk()
         top.geometry("500x400")
@@ -71,38 +65,31 @@ def display_image_unclosable():
         label.pack()
         t_.start()
         top.mainloop()
-        mood+=1
-        
+        mood += 1
         
 # handles all the display of the prompts based on mood
-def prompt_popups(indicator):
+def prompt_popups():
 
     friendly_prompts = ["Hello I am you.exe!", "I am you!", "Good day!", "Hello there"]
     agitated_prompts = ["Thats not very nice", "I thought we were friends", "Why would you do that?", "I am not happy with you"]
     Angry_prompts = ["I am very angry with you", "How could you do that?", "You were my friend."]
     Meltdown_prompts = ["Total destruction", "Your PC is mine", "I control you", "I am you.exe and I will destroy you!"]
 
-    try:
-        top = Toplevel()
-        if indicator == 0:
-            msg = random.choice(friendly_prompts)
-        elif indicator == 1:
-            msg = random.choice(Angry_prompts)
-        elif indicator == 2:
-            msg = random.choice(agitated_prompts)
-        elif indicator >= 3:
-            msg = random.choice(Meltdown_prompts)
-            
-
-        else:
-            msg = "something went wrong"
+    top = Toplevel()
+    if mood == 0:
+        msg = random.choice(friendly_prompts)
+    elif mood == 1:
+        msg = random.choice(Angry_prompts)
+    elif mood == 2:
+        msg = random.choice(agitated_prompts)
+    elif mood >= 3:
+        msg = random.choice(Meltdown_prompts)
+    else:
+        msg = "something went wrong"
         
-        label = Label(top, text=msg)
-        top.geometry("200x100+650+250")
-        label.pack()
-
-    except Exception as e:
-        print(e)
+    label = Label(top, text=msg)
+    top.geometry("200x100+650+250")
+    label.pack()
 
 
 def get_mood():
