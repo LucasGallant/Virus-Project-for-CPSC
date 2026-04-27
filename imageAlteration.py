@@ -21,8 +21,3 @@ def contrast(imgName):
     contrast_stretched = pixelVal_vec(img, r1, s1, r2, s2)
     # Save edited image.
     cv2.imwrite(imgName, contrast_stretched)
-    
-def invertColors(imgName):
-    img = cv2.imread(imgName)
-    inverseImage = 255 - img
-    cv2.imwrite(imgName, inverseImage)
