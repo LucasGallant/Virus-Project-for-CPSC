@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['main.py', 'you_exe.py', 'desktopChange.py'],
+    ['main.py', 'imageAlteration.py', 'you_exe.py', 'desktopChange.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -35,4 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=['icon.ico'],
 )
